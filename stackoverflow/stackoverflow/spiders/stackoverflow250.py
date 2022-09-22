@@ -4,7 +4,7 @@ class Stackoverflow250Spider(scrapy.Spider):
     name = 'stackoverflow250'
     start_urls = ['https://stackoverflow.com/questions?tab=active&pagesize=15']
     
-    def parse_answers(self, response, url, tags, votes, views, verify_answer):
+    def parse_answers(self, response, url, tags, votes, views, verify_answer, answers):
         list_answers = []
         for answer in response.css('div.answer.js-answer'):
             list_answers.append(answer.attrib['id'])
@@ -41,13 +41,7 @@ class Stackoverflow250Spider(scrapy.Spider):
 
             count_answers = int(quote.xpath('div/div/span/text()').getall()[2])
             if count_answers >0:
-                request = scrapy.Request(temp_dict['url'], callback=self.parse_answers, cb_kwargs= {
-                        'url': temp_dict['url'],
-                        'tags': temp_dict['tags'],
-                        'votes': temp_dict['votes'],
-                        'views': temp_dict['views']
-                    }
-                )
+                request = scrapy.Request(temp_dict['url'], callback=self.parse_answers, cb_kwargs= temp_dict)
                 request.cb_kwargs['verify_answer'] = verify_answer
                 yield request
             else:
