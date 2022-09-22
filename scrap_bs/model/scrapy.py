@@ -6,7 +6,7 @@ def scrapy_get():
     execute_query_response['status'] = False
     execute_query_response['content'] = []
     
-    for idx in range(2):
+    for idx in range(250):
         url = f"https://stackoverflow.com/questions?tab=active&pagesize=15&page={str(idx)}"
         response = requests.get(url)
         soup = bs(response.content, 'html.parser')
