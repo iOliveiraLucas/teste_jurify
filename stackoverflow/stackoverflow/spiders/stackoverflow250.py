@@ -51,5 +51,5 @@ class Stackoverflow250Spider(scrapy.Spider):
         current_page = int(temp_page) if temp_page != "…" else int(response.xpath('//*[@id="mainbar"]/div[5]/div[2]/text()').get())
 
         print ("+"*20, current_page)
-        if current_page < 250:
+        if current_page < 2:
             yield response.follow(f'https://stackoverflow.com/questions?tab=active&pagesize=15&page={current_page+1}', callback=self.parse)
