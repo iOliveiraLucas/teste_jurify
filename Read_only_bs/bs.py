@@ -13,7 +13,7 @@ def answers(url):
     list_answers = [answer.attrs['id'] for answer in soup.select(".answer")]
     
     verify_answer = soup.find(class_="js-accepted-answer") or ""
-    if verify_answer != "":
+    if verify_answer:
         verify_answer = verify_answer.get("id")
     
     return {"answers": list_answers, "verify_answer": verify_answer}

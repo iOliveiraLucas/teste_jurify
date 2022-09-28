@@ -18,7 +18,7 @@ class Stackoverflow250Spider(scrapy.Spider):
             'views': views
         }
         temp_dict['answers'] = list_answers
-        if verify_answer is not None:
+        if verify_answer:
             temp_dict['verify_answer'] = temp_dict['answers'][0]
         
         yield temp_dict
@@ -48,7 +48,7 @@ class Stackoverflow250Spider(scrapy.Spider):
                 yield temp_dict
 
         temp_page = response.xpath('//*[@id="mainbar"]/div[5]/div[1]/text()').get()
-        current_page = int(temp_page) if temp_page != "…" else int(response.xpath('//*[@id="mainbar"]/div[5]/div[2]/text()').get())
+        current_page = int(temp_page) if temp_page.isnumeric() else int(response.xpath('//*[@id="mainbar"]/div[5]/div[2]/text()').get())
 
         print ("+"*20, current_page)
         if current_page < 2:
